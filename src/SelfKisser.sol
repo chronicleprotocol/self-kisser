@@ -31,7 +31,7 @@ contract SelfKisser is ISelfKisser, Auth {
 
     // -- User Functionality --
 
-    function selfKiss(address oracle) external live {
+    function selfKiss(address oracle) external {
         selfKiss(oracle, msg.sender);
     }
 
