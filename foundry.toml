@@ -1,6 +1,18 @@
 [profile.default]
-src = "src"
-out = "out"
-libs = ["lib"]
+src = 'src'
+out = 'out'
+libs = ['lib']
+ffi = true
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+# Compilation
+solc_version = "0.8.16"
+optimizer = false
+via_ir = false
+
+[fmt]
+line_length = 80
+int_types = "short"
+number_underscore = "preserve"
+ignore = []
+
+# See more config options https://github.com/foundry-rs/foundry/tree/master/config
