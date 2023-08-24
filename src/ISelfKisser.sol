@@ -24,4 +24,6 @@ interface ISelfKisser {
 
     function support(address oracle) external;
     function unsupport(address oracle) external;
+
+    function kill() external;
 }
