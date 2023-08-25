@@ -10,7 +10,6 @@ import {ISelfKisser} from "src/ISelfKisser.sol";
 import {SelfKisser} from "src/SelfKisser.sol";
 
 contract SelfKisserScript is Script {
-
     /// @dev Run via:
     ///
     ///      ```bash
@@ -44,7 +43,7 @@ contract SelfKisserScript is Script {
     ///          --sig "$(cast calldata "support(address,address)" $SELF_KISSER $ORACLE)" \
     ///          script/SelfKisser.s.sol:SelfKisserScript
     ///      ```
-    function support(address self, address oracle)  public {
+    function support(address self, address oracle) public {
         vm.startBroadcast();
         ISelfKisser(self).support(oracle);
         vm.stopBroadcast();
@@ -63,7 +62,7 @@ contract SelfKisserScript is Script {
     ///          --sig "$(cast calldata "unsupport(address,address)" $SELF_KISSER $ORACLE)" \
     ///          script/SelfKisser.s.sol:SelfKisserScript
     ///      ```
-    function unsupport(address self, address oracle)  public {
+    function unsupport(address self, address oracle) public {
         vm.startBroadcast();
         ISelfKisser(self).unsupport(oracle);
         vm.stopBroadcast();
