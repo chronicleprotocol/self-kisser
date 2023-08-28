@@ -31,6 +31,8 @@ interface ISelfKisser {
         address indexed caller, address indexed oracle, address indexed who
     );
 
+    // -- User Functionality --
+
     /// @notice Kisses caller on oracle `oracle`.
     ///
     /// @dev Reverts if oracle `oracle` not supported.

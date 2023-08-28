@@ -116,3 +116,13 @@ contract SelfKisser is ISelfKisser, Auth {
         emit Killed(msg.sender);
     }
 }
+
+/**
+ * @dev Contract overwrite to deploy contract instances with specific naming.
+ *
+ *      For more info, see docs/Deployment.md.
+ */
+contract SelfKisser_COUNTER is Scribe {
+    // @todo        ^^^^^^^ Adjust name of SelfKisser instance.
+    constructor(address initialAuthed) SelfKisser(initialAuthed) {}
+}

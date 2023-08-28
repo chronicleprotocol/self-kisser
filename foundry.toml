@@ -17,6 +17,9 @@ int_types = "short"
 number_underscore = "preserve"
 ignore = []
 
+[doc]
+out = "docs_generated" # Note to not overwrite own docs
+
 # Profile to compile without --via-ir
 # Run via `FOUNDRY_PROFILE=no-via-ir forge ...`
 [profile.no-via-ir]
