@@ -122,7 +122,7 @@ contract SelfKisser is ISelfKisser, Auth {
  *
  *      For more info, see docs/Deployment.md.
  */
-contract SelfKisser_COUNTER is Scribe {
+contract SelfKisser_COUNTER is SelfKisser {
     // @todo        ^^^^^^^ Adjust name of SelfKisser instance.
     constructor(address initialAuthed) SelfKisser(initialAuthed) {}
 }
