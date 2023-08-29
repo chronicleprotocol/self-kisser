@@ -7,7 +7,6 @@ import {StdStyle} from "forge-std/StdStyle.sol";
 
 import {Chaincheck} from "@script/chronicle-std/Chaincheck.sol";
 import {IAuthChaincheck} from "@script/chronicle-std/IAuthChaincheck.sol";
-import {ITollChaincheck} from "@script/chronicle-std/ITollChaincheck.sol";
 
 import {ISelfKisser} from "src/ISelfKisser.sol";
 
@@ -28,13 +27,6 @@ import {ISelfKisser} from "src/ISelfKisser.sol";
  *          "IAuth": {
  *              "legacy": bool,
  *              "authed": [
- *                  "<Ethereum address>",
- *                  ...
- *              ]
- *          },
- *          "IToll": {
- *              "legacy": bool,
- *              "tolled": [
  *                  "<Ethereum address>",
  *                  ...
  *              ]
@@ -72,6 +64,8 @@ contract ISelfKisserChaincheck is Chaincheck {
         check_oracles_ContainsOnlySupportedOracles();
         check_oracles_ContainsAllSupportedOracles();
         check_dead();
+
+        check_IAuth();
 
         // Fail run if non-zero number of logs.
         return (logs.length == 0, logs);
@@ -144,20 +138,6 @@ contract ISelfKisserChaincheck is Chaincheck {
         // Run IAuth chaincheck.
         string[] memory authLogs;
         (, authLogs) = new IAuthChaincheck()
-                            .setUp(address(self), config)
-                            .run();
-
-        // Add logs to own logs.
-        for (uint i; i < authLogs.length; i++) {
-            logs.push(authLogs[i]);
-        }
-    }
-
-    /// @dev Checks the IToll module dependency.
-    function check_IToll() internal {
-        // Run IToll chaincheck.
-        string[] memory authLogs;
-        (, authLogs) = new ITollChaincheck()
                             .setUp(address(self), config)
                             .run();
 
