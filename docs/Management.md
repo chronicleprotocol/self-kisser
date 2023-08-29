@@ -138,9 +138,9 @@ $ forge script \
     --private-key $PRIVATE_KEY \
     --broadcast \
     --rpc-url $RPC_URL \
-    --sig $(cast calldata "rely(address,address)" $SCRIBE $WHO) \
+    --sig $(cast calldata "rely(address,address)" $SELF_KISSER $WHO) \
     -vvv \
-    script/${SCRIBE_FLAVOUR}.s.sol:${SCRIBE_FLAVOUR}Script
+    script/SelfKisser.s.sol:SelfKisserScript
 ```
 
 ### `IAuth::deny`
@@ -156,9 +156,9 @@ $ forge script \
     --private-key $PRIVATE_KEY \
     --broadcast \
     --rpc-url $RPC_URL \
-    --sig $(cast calldata "deny(address,address)" $SCRIBE $WHO) \
+    --sig $(cast calldata "deny(address,address)" $SELF_KISSER $WHO) \
     -vvv \
-    script/${SCRIBE_FLAVOUR}.s.sol:${SCRIBE_FLAVOUR}Script
+    script/SelfKisser.s.sol:SelfKisserScript
 ```
 
 ### `IToll::kiss`
@@ -174,9 +174,9 @@ $ forge script \
     --private-key $PRIVATE_KEY \
     --broadcast \
     --rpc-url $RPC_URL \
-    --sig $(cast calldata "kiss(address,address)" $SCRIBE $WHO) \
+    --sig $(cast calldata "kiss(address,address)" $SELF_KISSER $WHO) \
     -vvv \
-    script/${SCRIBE_FLAVOUR}.s.sol:${SCRIBE_FLAVOUR}Script
+    script/SelfKisser.s.sol:SelfKisserScript
 ```
 
 ### `IToll::diss`
@@ -192,7 +192,7 @@ $ forge script \
     --private-key $PRIVATE_KEY \
     --broadcast \
     --rpc-url $RPC_URL \
-    --sig $(cast calldata "diss(address,address)" $SCRIBE $WHO) \
+    --sig $(cast calldata "diss(address,address)" $SELF_KISSER $WHO) \
     -vvv \
-    script/${SCRIBE_FLAVOUR}.s.sol:${SCRIBE_FLAVOUR}Script
+    script/SelfKisser.s.sol:SelfKisserScript
 ```
