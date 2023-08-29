@@ -115,7 +115,7 @@ contract ISelfKisserChaincheck is Chaincheck {
     }
 
     function check_dead() internal {
-        bool wantDead = config.readBool(".SelfKisser.dead");
+        bool wantDead = config.readBool(".ISelfKisser.dead");
         bool gotDead = self.dead();
 
         if (wantDead != gotDead) {
