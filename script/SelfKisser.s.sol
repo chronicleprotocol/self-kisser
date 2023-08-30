@@ -52,7 +52,7 @@ contract SelfKisserScript is Script {
     /// @dev Kisses address `who` on oracle `oracle`.
     function selfKiss(address self, address oracle, address who) public {
         vm.startBroadcast();
-        ISelfKisser(self).selfKiss(oracle);
+        ISelfKisser(self).selfKiss(oracle, who);
         vm.stopBroadcast();
 
         console2.log("SelfKissed");
