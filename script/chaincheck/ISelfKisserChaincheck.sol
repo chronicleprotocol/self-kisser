@@ -25,6 +25,7 @@ import {ISelfKisser} from "src/ISelfKisser.sol";
  *              "dead": bool
  *          },
  *          "IAuth": {
+ *              "disabled": bool,
  *              "legacy": bool,
  *              "authed": [
  *                  "<Ethereum address>",
