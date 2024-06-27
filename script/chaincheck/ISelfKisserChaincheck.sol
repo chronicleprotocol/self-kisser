@@ -138,9 +138,7 @@ contract ISelfKisserChaincheck is Chaincheck {
     function check_IAuth() internal {
         // Run IAuth chaincheck.
         string[] memory authLogs;
-        (, authLogs) = new IAuthChaincheck()
-                            .setUp(address(self), config)
-                            .run();
+        (, authLogs) = new IAuthChaincheck().setUp(address(self), config).run();
 
         // Add logs to own logs.
         for (uint i; i < authLogs.length; i++) {
