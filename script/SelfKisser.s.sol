@@ -6,31 +6,16 @@ import {console2} from "forge-std/console2.sol";
 
 import {IAuth} from "chronicle-std/auth/IAuth.sol";
 
-import {IGreenhouse} from "greenhouse/IGreenhouse.sol";
-
 import {ISelfKisser} from "src/ISelfKisser.sol";
 import {SelfKisser_COUNTER as SelfKisser} from "src/SelfKisser.sol";
 // @todo           ^^^^^^^ Adjust name of SelfKisser instance.
 
 contract SelfKisserScript is Script {
-    /// @dev Deploys a new SelfKisser instance via Greenhouse instance `greenhouse`
-    ///      and salt `salt` with `initialAuthed` being the address initially
-    ///      auth'ed.
-    function deploy(address greenhouse, bytes32 salt, address initialAuthed)
-        public
-    {
-        // Create creation code with constructor arguments.
-        bytes memory creationCode = abi.encodePacked(
-            type(SelfKisser).creationCode, abi.encode(initialAuthed)
-        );
-
-        // Ensure salt not yet used.
-        address deployed = IGreenhouse(greenhouse).addressOf(salt);
-        require(deployed.code.length == 0, "Salt already used");
-
-        // Plant creation code via greenhouse.
+    /// @dev Deploys a new SelfKisser instance with `initialAuthed` being the
+    ///      address initially auth'ed.
+    function deploy(address initialAuthed) public {
         vm.startBroadcast();
-        IGreenhouse(greenhouse).plant(salt, creationCode);
+        address deployed = address(new SelfKisser(initialAuthed));
         vm.stopBroadcast();
 
         console2.log("Deployed at", deployed);

@@ -1,6 +1,6 @@
 # Deployment
 
-This document describes how to deploy `Scribe` and `ScribeOptimistic` instance via _Chronicle Protocol_'s [`Greenhouse`](https://github.com/chronicleprotocol/greenhouse) contract factory.
+This document describes how to deploy `SelfKisser` instances.
 
 ## Environment Variables
 
@@ -14,11 +14,6 @@ The following environment variables must be set:
     - Note that the API endpoint varies per Etherscan chain instance
     - Note to point to actual API endpoint (e.g. `/api`) and not just host
 - `ETHERSCAN_API_KEY`: The Etherscan API key for the Etherscan's chain instance
-- `GREENHOUSE`: The `Greenhouse` instance to use for deployment
-- `SALT`: The salt to deploy the `SelfKisser` instance to
-    - Note to use the salt's string representation
-    - Note that the salt must not exceed 32 bytes in length
-    - Note that the salt should match the name of the contract deployed!
 - `INITIAL_AUTHED`: The address being auth'ed on the newly deployed `Scribe` instance
 
 Note that an `.env.example` file is provided in the project root. To set all environment variables at once, create a copy of the file and rename the copy to `.env`, adjust the variables' values, and run `source .env`.
@@ -26,7 +21,7 @@ Note that an `.env.example` file is provided in the project root. To set all env
 To easily check the environment variables, run:
 
 ```bash
-$ env | grep -e "RPC_URL" -e "KEYSTORE" -e "KEYSTORE_PASSWORD" -e "ETHERSCAN_API_URL" -e "ETHERSCAN_API_KEY" -e "GREENHOUSE" -e "SALT" -e "INITIAL_AUTHED"
+$ env | grep -e "RPC_URL" -e "KEYSTORE" -e "KEYSTORE_PASSWORD" -e "ETHERSCAN_API_URL" -e "ETHERSCAN_API_KEY" -e "INITIAL_AUTHED"
 ```
 
 ## Code Adjustments
@@ -49,7 +44,7 @@ $ SALT_BYTES32=$(cast format-bytes32-string $SALT) && \
     --password "$KEYSTORE_PASSWORD" \
     --broadcast \
     --rpc-url "$RPC_URL" \
-    --sig "$(cast calldata "deploy(address,bytes32,address)" "$GREENHOUSE" "$SALT_BYTES32" "$INITIAL_AUTHED")" \
+    --sig "$(cast calldata "deploy(address)" "$INITIAL_AUTHED")" \
     -vvv \
     script/SelfKisser.s.sol:SelfKisserScript
 ```
