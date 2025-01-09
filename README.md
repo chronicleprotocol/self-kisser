@@ -4,12 +4,11 @@
 >
 > Make it _physical_ ;)
 
-The `SelfKisser` is a simple contract allowing everyone to whitelist (`kiss`) themselves on a set of supported _Chronicle Protocol_ oracles. This allows easy access during e.g. hackathons.
+The `SelfKisser` is a simple contract allowing everyone to whitelist (`kiss`) themselves on _Chronicle Protocol_ oracles. This allows easy access during e.g. hackathons.
 
 > **Warning**
 >
 > This contract may never be deployed to production environments!
-
 
 ## How to get physical?
 
@@ -22,4 +21,3 @@ For more info, see [docs/Management.md](./docs/Management.md).
 ## Dependencies
 
 - [chronicleprotocol/chronicle-std@v2](https://github.com/chronicleprotocol/chronicle-std/tree/v2)
-

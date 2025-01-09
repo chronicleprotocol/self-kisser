@@ -27,13 +27,6 @@ contract SelfKisser is ISelfKisser, Auth {
         _;
     }
 
-    modifier supported(address oracle) {
-        if (_oracles[oracle] == 0) {
-            revert OracleNotSupported(oracle);
-        }
-        _;
-    }
-
     constructor(address initialAuthed) Auth(initialAuthed) {}
 
     // -- User Functionality --
@@ -44,11 +37,7 @@ contract SelfKisser is ISelfKisser, Auth {
     }
 
     /// @inheritdoc ISelfKisser
-    function selfKiss(address oracle, address who)
-        public
-        live
-        supported(oracle)
-    {
+    function selfKiss(address oracle, address who) public live {
         IToll(oracle).kiss(who);
         emit SelfKissed(msg.sender, oracle, who);
     }
@@ -56,57 +45,11 @@ contract SelfKisser is ISelfKisser, Auth {
     // -- View Functionality --
 
     /// @inheritdoc ISelfKisser
-    function oracles(address oracle) external view returns (bool) {
-        return _oracles[oracle] == 1;
-    }
-
-    /// @inheritdoc ISelfKisser
-    function oracles() external view returns (address[] memory) {
-        // Initiate array with upper limit length.
-        address[] memory oraclesList = new address[](_oraclesTouched.length);
-
-        // Iterate through all possible support oracle.
-        uint ctr;
-        for (uint i; i < oraclesList.length; i++) {
-            // Add address only if still auth'ed.
-            if (_oracles[_oraclesTouched[i]] == 1) {
-                oraclesList[ctr++] = _oraclesTouched[i];
-            }
-        }
-
-        // Set length of array to number of oracles actually included.
-        assembly ("memory-safe") {
-            mstore(oraclesList, ctr)
-        }
-
-        return oraclesList;
-    }
-
-    /// @inheritdoc ISelfKisser
     function dead() external view returns (bool) {
         return _dead == 1;
     }
 
     // -- Auth'ed Functionality --
-
-    /// @inheritdoc ISelfKisser
-    function support(address oracle) external live auth {
-        if (_oracles[oracle] == 1) return;
-
-        require(IAuth(oracle).authed(address(this)));
-
-        _oracles[oracle] = 1;
-        _oraclesTouched.push(oracle);
-        emit OracleSupported(msg.sender, oracle);
-    }
-
-    /// @inheritdoc ISelfKisser
-    function unsupport(address oracle) external live auth {
-        if (_oracles[oracle] == 0) return;
-
-        _oracles[oracle] = 0;
-        emit OracleUnsupported(msg.sender, oracle);
-    }
 
     /// @inheritdoc ISelfKisser
     function kill() external auth {
