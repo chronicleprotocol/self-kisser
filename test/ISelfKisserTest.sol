@@ -73,7 +73,6 @@ abstract contract ISelfKisserTest is Test {
         vm.expectRevert(ISelfKisser.Dead.selector);
         kisser.selfKiss(address(0xdead), address(0xdead));
     }
-
 }
 
 // -- Mocks --

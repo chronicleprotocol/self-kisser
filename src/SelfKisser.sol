@@ -9,7 +9,6 @@ import {IToll} from "chronicle-std/toll/IToll.sol";
 import {ISelfKisser} from "./ISelfKisser.sol";
 
 contract SelfKisser is ISelfKisser, Auth {
-
     /// @dev Whether SelfKisser is dead.
     uint internal _dead;
 
@@ -30,10 +29,7 @@ contract SelfKisser is ISelfKisser, Auth {
     }
 
     /// @inheritdoc ISelfKisser
-    function selfKiss(address oracle, address who)
-        public
-        live
-    {
+    function selfKiss(address oracle, address who) public live {
         IToll(oracle).kiss(who);
         emit SelfKissed(msg.sender, oracle, who);
     }
