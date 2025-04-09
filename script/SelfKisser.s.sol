@@ -47,24 +47,6 @@ contract SelfKisserScript is Script {
 
     // -- Auth'ed Functionality
 
-    /// @dev Adds support for oracle `oracle`.
-    function support(address self, address oracle) public {
-        vm.startBroadcast();
-        ISelfKisser(self).support(oracle);
-        vm.stopBroadcast();
-
-        console2.log("Supported", oracle);
-    }
-
-    /// @dev Removes support for oracle `oracle`.
-    function unsupport(address self, address oracle) public {
-        vm.startBroadcast();
-        ISelfKisser(self).unsupport(oracle);
-        vm.stopBroadcast();
-
-        console2.log("Unsupport", oracle);
-    }
-
     /// @dev !!! DANGER !!!
     ///
     /// @dev Kills `self`.

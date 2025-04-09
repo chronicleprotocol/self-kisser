@@ -34,10 +34,9 @@ abstract contract ISelfKisserTest is Test {
     function testFuzz_selfKiss_Self(address caller) public {
         vm.assume(caller != address(kisser));
 
-        // Make and support oracle.
+        // Make oracle.
         ChronicleMock mock = new ChronicleMock(address(this));
         IAuth(address(mock)).rely(address(kisser));
-        kisser.support(address(mock));
 
         vm.prank(caller);
         kisser.selfKiss(address(mock));
@@ -49,10 +48,9 @@ abstract contract ISelfKisserTest is Test {
         vm.assume(caller != address(kisser));
         vm.assume(other != address(kisser));
 
-        // Make and support oracle.
+        // Make oracle.
         ChronicleMock mock = new ChronicleMock(address(this));
         IAuth(address(mock)).rely(address(kisser));
-        kisser.support(address(mock));
 
         vm.prank(caller);
         kisser.selfKiss(address(mock), other);
@@ -60,82 +58,7 @@ abstract contract ISelfKisserTest is Test {
         assertTrue(IToll(address(mock)).tolled(other));
     }
 
-    // -- Test: support + unsupport
-
-    function test_support() public {
-        ChronicleMock mock = new ChronicleMock(address(this));
-        IAuth(address(mock)).rely(address(kisser));
-
-        kisser.support(address(mock));
-
-        assertTrue(kisser.oracles(address(mock)));
-    }
-
-    function test_support_RevertsIf_NotAuthorized() public {
-        ChronicleMock mock = new ChronicleMock(address(this));
-
-        vm.expectRevert();
-        kisser.support(address(mock));
-    }
-
-    function test_unsupport() public {
-        ChronicleMock mock = new ChronicleMock(address(this));
-        IAuth(address(mock)).rely(address(kisser));
-
-        kisser.support(address(mock));
-        kisser.unsupport(address(mock));
-
-        assertFalse(kisser.oracles(address(mock)));
-    }
-
-    function test_support_unsupport() public {
-        ChronicleMock mock = new ChronicleMock(address(this));
-        IAuth(address(mock)).rely(address(kisser));
-
-        kisser.support(address(mock));
-        kisser.unsupport(address(mock));
-        kisser.support(address(mock));
-
-        assertTrue(kisser.oracles(address(mock)));
-    }
-
-    // -- Test: isSupportedProtected --
-
-    function test_selfKiss_Self_isSupportedProtected() public {
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                ISelfKisser.OracleNotSupported.selector, address(0xdead)
-            )
-        );
-        kisser.selfKiss(address(0xdead));
-    }
-
-    function test_selfKiss_Other_isSupportedProtected() public {
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                ISelfKisser.OracleNotSupported.selector, address(0xdead)
-            )
-        );
-        kisser.selfKiss(address(0xdead), address(0xdead));
-    }
-
-    function test_unsupport_isSupportedProtected() public {}
-
     // -- Test: isLiveProtected --
-
-    function test_support_isLiveProtected() public {
-        kisser.kill();
-
-        vm.expectRevert(ISelfKisser.Dead.selector);
-        kisser.support(address(0xdead));
-    }
-
-    function test_unsupport_isLiveProtected() public {
-        kisser.kill();
-
-        vm.expectRevert(ISelfKisser.Dead.selector);
-        kisser.unsupport(address(0xdead));
-    }
 
     function test_selfKiss_Self_isLiveProtected() public {
         kisser.kill();
@@ -149,28 +72,6 @@ abstract contract ISelfKisserTest is Test {
 
         vm.expectRevert(ISelfKisser.Dead.selector);
         kisser.selfKiss(address(0xdead), address(0xdead));
-    }
-
-    // -- Test: isAuthProtected --
-
-    function test_support_isAuthProtected() public {
-        vm.prank(address(0xdead));
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                IAuth.NotAuthorized.selector, address(0xdead)
-            )
-        );
-        kisser.support(address(0xdead));
-    }
-
-    function test_unsupport_isAuthProtected() public {
-        vm.prank(address(0xdead));
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                IAuth.NotAuthorized.selector, address(0xdead)
-            )
-        );
-        kisser.unsupport(address(0xdead));
     }
 }
 
